@@ -1,0 +1,24 @@
+﻿  Installing vcpkg dependencies to C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\vcpkg_installed\x64-windows\
+  "C:\vcpkg\vcpkg\vcpkg.exe" install  --x-wait-for-lock --triplet "x64-windows" --vcpkg-root "C:\vcpkg\vcpkg\\" "--x-manifest-root=C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\\" "--x-install-root=C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\vcpkg_installed\x64-windows\\" 
+  Detecting compiler hash for triplet x64-windows...
+  The following packages will be built and installed:
+      raylib[core,use-audio]:x64-windows -> 4.5.0#1
+    * vcpkg-cmake:x64-windows -> 2023-05-04
+    * vcpkg-cmake-config:x64-windows -> 2022-02-06#1
+  Additional packages (*) will be modified to complete this operation.
+  Restored 3 package(s) from C:\Users\pulse\AppData\Local\vcpkg\archives in 127 ms. Use --debug to see more details.
+  Installing 1/3 vcpkg-cmake-config:x64-windows...
+  Elapsed time to handle vcpkg-cmake-config:x64-windows: 6.48 ms
+  Installing 2/3 vcpkg-cmake:x64-windows...
+  Elapsed time to handle vcpkg-cmake:x64-windows: 6.48 ms
+  Installing 3/3 raylib:x64-windows...
+  Elapsed time to handle raylib:x64-windows: 12.9 ms
+  Total install time: 26 ms
+  raylib provides CMake targets:
+  
+      # this is heuristically generated, and may not be correct
+      find_package(raylib CONFIG REQUIRED)
+      target_link_libraries(main PRIVATE raylib)
+  
+  main.cpp
+  Raylib Graph Visualizer.vcxproj -> C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\x64\Debug\Raylib Graph Visualizer.exe
