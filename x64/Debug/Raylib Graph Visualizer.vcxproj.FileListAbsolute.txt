@@ -1,3 +1,0 @@
-C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\x64\Debug\Raylib Graph Visualizer.vcxproj.CopyComplete
-C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\x64\Debug\Raylib Graph Visualizer.exe
-C:\Users\pulse\Desktop\School\Projects\Raylib Graph Visualizer\x64\Debug\raylib.dll
