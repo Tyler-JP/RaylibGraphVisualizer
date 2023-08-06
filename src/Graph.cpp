@@ -1,21 +1,23 @@
 #include "../include/Graph.h"
+#include "../include/Node.h"
+#include "../include/Renderer.h"
+
+#include <map>
+#include <vector>
 
 using namespace std;
-
-Graph::Graph(bool weighted)
-{
-	this->weighted = weighted;
-}
 
 Graph::~Graph()
 {
 }
 
-void Graph::AddNode(int node)
+void Graph::AddNode(int id, float x, float y)
 {
-	if (!HasNode(node))
+	if (!HasNode(id))
 	{
-		adjacencyList[node] = vector<pair<int, double>>();
+		Node node(id, x, y);
+		adjacencyList[id] = vector<pair<int, double>>();
+		renderer.DrawNode(node);
 	}
 }
 
