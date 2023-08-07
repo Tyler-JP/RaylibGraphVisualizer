@@ -9,7 +9,9 @@
 
 int main(void)
 {
-    InitWindow(1200, 750, "Graph Visualizer");
+    const int screenWidth = 1200;
+    const int screenHeight = 750;
+    InitWindow(screenWidth, screenHeight, "Graph Visualizer");
 
     Renderer renderer;
     Graph graph(renderer);
@@ -22,6 +24,7 @@ int main(void)
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		renderer.DrawNode(nodeTest);
+        renderer.DrawNodeInput(screenWidth, screenHeight);
 		EndDrawing();
     }
 
