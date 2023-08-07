@@ -21,7 +21,7 @@ void Renderer::DrawNode(Node node)
 
 void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 {
-	Rectangle textBox = { screenWidth / 4.0f - 150, screenHeight / 1.1f, 165, 35 };
+	Rectangle textBox = { screenWidth / 4.0f - 30, screenHeight / 1.1f, 85, 35 };
 	DrawRectangleRec(textBox, LIGHTGRAY);
 
 	if (CheckCollisionPointRec(GetMousePosition(), textBox))
@@ -39,8 +39,10 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 			}
 			key = GetKeyPressed();
 			if (IsKeyPressed(KEY_BACKSPACE)) {
-				nodeID[nodeIDIndex] = '\0';
-				if (nodeIDIndex > 0) nodeIDIndex--;
+				if (nodeIDIndex > 0) {
+					nodeIDIndex--;
+					nodeID[nodeIDIndex] = '\0';
+				}
 			}
 		}
 	}
@@ -48,5 +50,23 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 	{
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	}
-	DrawText(nodeID, textBox.x + 5, textBox.y + 8, 40, MAROON);
+	DrawText(nodeID, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+}
+
+void Renderer::DrawEdgeConnectionInput(const int screenWidth, const int screenHeight)
+{
+	Rectangle textBox = { screenWidth / 4.0f + 60, screenHeight / 1.1f, 175, 35 };
+	DrawRectangleRec(textBox, LIGHTGRAY);
+
+	if (CheckCollisionPointCircle(GetMousePosition(), nodes)
+	{
+
+	}
+}
+
+void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
+{
+	DrawText("Add New Node: ", screenWidth / 4.0f - 275, screenHeight / 1.1f + 3, 32, MAROON);
+	DrawText("Node ID", screenWidth / 4.0f - 12, screenHeight / 1.1f + 38, 12, BLACK);
+	DrawText("Add Edge Connections", screenWidth / 4.0f + 80, screenHeight / 1.1f + 38, 12, BLACK);
 }

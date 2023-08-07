@@ -25,6 +25,8 @@ int main(void)
 		ClearBackground(RAYWHITE);
 		renderer.DrawNode(nodeTest);
         renderer.DrawNodeInput(screenWidth, screenHeight);
+        renderer.DrawEdgeConnectionInput(screenWidth, screenHeight);
+        renderer.DrawOnScreenText(screenWidth, screenHeight);
 		EndDrawing();
     }
 

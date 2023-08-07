@@ -2,7 +2,7 @@
 #include "../include/Graph.h"
 #include "../include/Node.h"
 
-#define MAX_INPUT_CHARS     4
+#define MAX_INPUT_CHARS     2
 
 class Renderer
 {
@@ -12,4 +12,6 @@ private:
 public:
 	void DrawNode(Node node);
 	void DrawNodeInput(const int screenWidth, const int screenHeight);
+	void DrawEdgeConnectionInput(const int screenWidth, const int screenHeight);
+	void DrawOnScreenText(const int screenWidth, const int screenHeight);
 };
