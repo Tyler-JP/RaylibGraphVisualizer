@@ -7,6 +7,7 @@
 #include <utility>
 #include <string>
 #include <sstream>
+#include <iostream>
 
 
 using namespace std;
@@ -20,6 +21,21 @@ void Renderer::DrawNodes(std::vector<Node>& nodes)
 		DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, BLACK);
 	}
 }
+
+void Renderer::DrawNodeEdges(const int screenWidth, const int screenHeight, std::vector<Node>& nodes, Graph& graph) {
+	for (const auto& node : nodes) {
+		Vector2 pos = { node.GetX(), node.GetY() };
+		int nodeId = node.GetId();
+		const auto& neighbors = graph.GetNeighbors(nodeId);
+		for (const auto& neighbor : neighbors) {
+			Node* neighborNode = graph.GetNode(neighbor.first);
+			if (neighborNode) {
+				Vector2 edgePos = { neighborNode->GetX(), neighborNode->GetY() };
+				DrawLineEx(pos, edgePos, 3.0f, BLACK);
+			}
+		}
+	}
+}	
 
 void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 {
@@ -121,7 +137,7 @@ void Renderer::DraggableNode(std::vector<Node>& nodes)
 	}
 }
 
-void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph) {
+void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) {
 	Rectangle button = { screenWidth / 4.0f + 250, screenHeight / 1.1f, 140, 35 };
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Add Node", button.x + 15, button.y + 7, 24, MAROON);
@@ -130,10 +146,28 @@ void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, 
 	{
 		int id = stoi(nodeID);
 		graph.AddNode(id, 150, 100);
-		//need to add edges
 		nodeID[0] = '\0';
 		nodeIDIndex = 0;
+		for(auto & node : nodes)
+		{
+			if (isNodePresentInNodeEdges(node.GetId(), nodeEdges)) {
+				std::cout << "Adding edge to node: " << node.GetId() << std::endl;
+				graph.AddEdge(id, node.GetId(), 1.0f);
+			}
+		}
+		nodeEdges = "";
 	}
+}
+
+bool Renderer::isNodePresentInNodeEdges(int nodeId, const std::string& nodeEdges) {
+	std::istringstream iss(nodeEdges);
+	std::string token;
+	while (std::getline(iss, token, ',')) {
+		if (std::stoi(token) == nodeId) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 

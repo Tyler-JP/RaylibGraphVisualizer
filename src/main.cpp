@@ -27,11 +27,13 @@ int main(void)
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 		renderer.DrawNodes(graph.GetNodes());
+        renderer.DrawNodeEdges(screenWidth, screenHeight, graph.GetNodes(), graph);
         renderer.DraggableNode(graph.GetNodes());
         renderer.DrawNodeInput(screenWidth, screenHeight);
         renderer.DrawEdgeConnectionInput(screenWidth, screenHeight, graph.GetNodes());
-        renderer.DrawAddNodeButton(screenWidth, screenHeight, graph);
+        renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawOnScreenText(screenWidth, screenHeight);
+        //graph.PrintGraph();
 		EndDrawing();
     }
 

@@ -4,6 +4,7 @@
 
 #include <map>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -54,8 +55,6 @@ void Graph::RemoveEdge(int node1, int node2)
 	}
 }
 
-
-
 bool Graph::HasNode(int node)
 {
 	return adjacencyList.find(node) != adjacencyList.end();
@@ -63,18 +62,16 @@ bool Graph::HasNode(int node)
 
 bool Graph::HasEdge(int node1, int node2)
 {
-	if (!HasNode(node1) || !HasNode(node2))
-	{
+	if (!HasNode(node1) || !HasNode(node2)) {
 		return false;
 	}
 
-	for (auto edge : adjacencyList[node1])
-	{
-		if (edge.first == node2)
-		{
+	for (auto edge : adjacencyList[node1]) {
+		if (edge.first == node2) {
 			return true;
 		}
 	}
+	return false;
 }
 
 double Graph::GetEdgeWeight(int node1, int node2) 
@@ -96,11 +93,21 @@ double Graph::GetEdgeWeight(int node1, int node2)
 
 const vector<pair<int, double>>& Graph::GetNeighbors(int node)
 {
-	if (!HasNode(node))
-	{
-		return vector<pair<int, double>>();
+	static std::vector<std::pair<int, double>> empty;
+	if (!HasNode(node)) {
+		return empty;
 	}
 
 	return adjacencyList[node];
+}
+
+void Graph::PrintGraph() {
+for (auto node : adjacencyList) {
+		std::cout << node.first << ": ";
+		for (auto edge : node.second) {
+			cout << edge.first << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 

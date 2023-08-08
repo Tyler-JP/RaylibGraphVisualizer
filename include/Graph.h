@@ -22,6 +22,13 @@ public:
 	double GetEdgeWeight(int node1, int node2);
 	const std::vector<std::pair<int, double>>& GetNeighbors(int node);
 	std::vector<Node>& GetNodes() { return nodes; }
+	Node* GetNode(int id) {
+		auto it = std::find_if(nodes.begin(), nodes.end(), [id](const Node& node) { return node.GetId() == id; });
+		return it != nodes.end() ? &(*it) : nullptr;
+	}
+	const std::map<int, std::vector<std::pair<int, double>>>& GetEdges() { return adjacencyList; }
+	void PrintGraph();
+	
 
 
 private:
