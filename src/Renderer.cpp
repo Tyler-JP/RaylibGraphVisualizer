@@ -11,12 +11,14 @@
 
 using namespace std;
 
-void Renderer::DrawNode(Node node)
+void Renderer::DrawNodes(std::vector<Node>& nodes)
 {
-	Vector2 pos = { node.GetX(), node.GetY() };
-	DrawCircleV(pos, 40.0f, BLUE); // TODO: Need to change this to ImageDrawCircle to check for better pixelation
-	DrawCircleLines(node.GetX(), node.GetY(), 40.0f, BLACK);
-	DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, BLACK);
+	for (const auto& node : nodes) {
+		Vector2 pos = { node.GetX(), node.GetY() };
+		DrawCircleV(pos, 40.0f, BLUE); // TODO: Need to change this to ImageDrawCircle to check for better pixelation
+		DrawCircleLines(node.GetX(), node.GetY(), 40.0f, BLACK);
+		DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, BLACK);
+	}
 }
 
 void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
@@ -31,7 +33,7 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
 		while (key > 0)
 		{
-			if (key >= 32 && key <= 125 && (nodeIDIndex < MAX_INPUT_CHARS))
+			if (key >= 32 && key <= 125 && (nodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
 			{
 				nodeID[nodeIDIndex] = (char)key;
 				nodeID[nodeIDIndex + 1] = '\0';
@@ -53,14 +55,84 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 	DrawText(nodeID, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
 }
 
-void Renderer::DrawEdgeConnectionInput(const int screenWidth, const int screenHeight)
+void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::vector<Node>& nodes)
 {
 	Rectangle textBox = { screenWidth / 4.0f + 60, screenHeight / 1.1f, 175, 35 };
 	DrawRectangleRec(textBox, LIGHTGRAY);
 
-	if (CheckCollisionPointCircle(GetMousePosition(), nodes)
+	for (const auto& node : nodes) 
 	{
+		int nodeID = node.GetId();
+		Vector2 nodePos = {node.GetX(), node.GetY()};
+		if(CheckCollisionPointCircle(GetMousePosition(), nodePos, 30.0f) && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			string nodeIDStr = to_string(nodeID);
+			size_t pos = nodeEdges.find(nodeIDStr);
+			if (pos != string::npos)
+			{
+				nodeEdges.erase(pos, nodeIDStr.length()+1);
+				if (pos > 0 && nodeEdges[pos - 1] == ',')
+				{
+					nodeEdges.erase(pos-1, 1);
+				}
+			} else {
+				if (!nodeEdges.empty())
+				{
+					nodeEdges += ',';
+				}
+				nodeEdges += to_string(nodeID);
+			}
+		}
+	}
+	DrawText(nodeEdges.c_str(), textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+}
 
+Vector2 posDiff;
+int draggableNodeIdx = -1;
+void Renderer::DraggableNode(std::vector<Node>& nodes)
+{
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	{
+		for (auto& node : nodes) {
+			Vector2 pos = { node.GetX(), node.GetY() };
+				if (CheckCollisionPointCircle(GetMousePosition(), pos, 40.0f))
+				{
+					draggableNodeIdx = node.GetId();
+					posDiff.x = node.GetX() - GetMousePosition().x;
+					posDiff.y = node.GetY() - GetMousePosition().y;
+					break;
+				}
+		}
+	}
+	if (draggableNodeIdx != -1 && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+	{
+		for (auto& node : nodes)
+		{
+			if (node.GetId() == draggableNodeIdx)
+			{
+				node.SetPosition(GetMousePosition().x + posDiff.x, GetMousePosition().y + posDiff.y);
+				break;
+			}
+		}
+	}
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) 
+	{
+		draggableNodeIdx = -1;
+	}
+}
+
+void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph) {
+	Rectangle button = { screenWidth / 4.0f + 250, screenHeight / 1.1f, 140, 35 };
+	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
+	DrawText("Add Node", button.x + 15, button.y + 7, 24, MAROON);
+
+	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && nodeID[0] != '\0')
+	{
+		int id = stoi(nodeID);
+		graph.AddNode(id, 150, 100);
+		//need to add edges
+		nodeID[0] = '\0';
+		nodeIDIndex = 0;
 	}
 }
 

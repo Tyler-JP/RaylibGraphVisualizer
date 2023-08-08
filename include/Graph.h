@@ -9,7 +9,7 @@ class Renderer;
 class Graph
 {
 public:
-	Graph(Renderer& renderer, bool weighted = false) : renderer(renderer), weighted(weighted), adjacencyList(adjacencyList) { }
+	Graph(Renderer& renderer, bool weighted = false) : renderer(renderer), weighted(weighted) { }
 	~Graph();
 
 	void AddNode(int id, float x, float y);
@@ -21,9 +21,12 @@ public:
 	bool HasEdge(int node1, int node2);
 	double GetEdgeWeight(int node1, int node2);
 	const std::vector<std::pair<int, double>>& GetNeighbors(int node);
+	std::vector<Node>& GetNodes() { return nodes; }
+
 
 private:
 	bool weighted;
-	std::map<int, std::vector<std::pair<int, double>>>& adjacencyList;
+	std::map<int, std::vector<std::pair<int, double>>> adjacencyList;
 	Renderer& renderer;
+	std::vector<Node> nodes;
 };

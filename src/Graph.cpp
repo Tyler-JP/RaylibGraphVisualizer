@@ -17,7 +17,7 @@ void Graph::AddNode(int id, float x, float y)
 	{
 		Node node(id, x, y);
 		adjacencyList[id] = vector<pair<int, double>>();
-		renderer.DrawNode(node);
+		nodes.push_back(node);
 	}
 }
 
