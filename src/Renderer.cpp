@@ -57,17 +57,17 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
 		while (key > 0)
 		{
-			if (key >= 32 && key <= 125 && (nodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
+			if (key >= 32 && key <= 125 && (addNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
 			{
-				nodeID[nodeIDIndex] = (char)key;
-				nodeID[nodeIDIndex + 1] = '\0';
-				nodeIDIndex++;
+				addNodeID[addNodeIDIndex] = (char)key;
+				addNodeID[addNodeIDIndex + 1] = '\0';
+				addNodeIDIndex++;
 			}
 			key = GetKeyPressed();
 			if (IsKeyPressed(KEY_BACKSPACE)) {
-				if (nodeIDIndex > 0) {
-					nodeIDIndex--;
-					nodeID[nodeIDIndex] = '\0';
+				if (addNodeIDIndex > 0) {
+					addNodeIDIndex--;
+					addNodeID[addNodeIDIndex] = '\0';
 				}
 			}
 		}
@@ -76,7 +76,41 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 	{
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	}
-	DrawText(nodeID, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+	DrawText(addNodeID, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+}
+
+void Renderer::DrawNodeDeleteInput(const int screenWidth, const int screenHeight)
+{
+	Rectangle textBox = { screenWidth / 4.0f - 154, screenHeight / 1.1f - 32, 85, 35 };
+	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
+
+	if (CheckCollisionPointRec(GetMousePosition(), textBox))
+	{
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		int key = GetKeyPressed();
+		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
+		while (key > 0)
+		{
+			if (key >= 32 && key <= 125 && (delNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
+			{
+				delNodeID[delNodeIDIndex] = (char)key;
+				delNodeID[delNodeIDIndex + 1] = '\0';
+				delNodeIDIndex++;
+			}
+			key = GetKeyPressed();
+			if (IsKeyPressed(KEY_BACKSPACE)) {
+				if (delNodeIDIndex > 0) {
+					delNodeIDIndex--;
+					delNodeID[delNodeIDIndex] = '\0';
+				}
+			}
+		}
+	}
+	else
+	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	}
+	DrawText(delNodeID, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
 }
 
 void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::vector<Node>& nodes)
@@ -84,36 +118,34 @@ void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::v
 	Rectangle textBox = { screenWidth / 4.0f - 40, screenHeight / 1.1f + 30, 175, 35 };
 	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
 
-	for (const auto& node : nodes) 
+	for (const auto& node : nodes)
 	{
 		int nodeID = node.GetId();
-		Vector2 nodePos = {node.GetX(), node.GetY()};
-		if(CheckCollisionPointCircle(GetMousePosition(), nodePos, 30.0f) && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		Vector2 nodePos = { node.GetX(), node.GetY() };
+		if (CheckCollisionPointCircle(GetMousePosition(), nodePos, 30.0f) && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
 		{
-			string nodeIDStr = to_string(nodeID);
-			size_t pos = nodeEdges.find(nodeIDStr);
-			if (pos != string::npos)
+			auto it = std::find(nodeEdges.begin(), nodeEdges.end(), nodeID);
+			if (it != nodeEdges.end())
 			{
-				if (pos != 0) {
-					nodeEdges.erase(pos, nodeIDStr.length());
-				}
-				else {
-					nodeEdges.erase(pos, nodeIDStr.length() + 1); // erase comma node is first in str
-				}
-				if (pos > 0 && nodeEdges[pos - 1] == ',')
-				{
-					nodeEdges.erase(pos-1, 1);
-				}
-			} else {
-				if (!nodeEdges.empty())
-				{
-					nodeEdges += ',';
-				}
-				nodeEdges += to_string(nodeID);
+				nodeEdges.erase(it);
+			}
+			else
+			{
+				nodeEdges.push_back(nodeID);
 			}
 		}
 	}
-	DrawText(nodeEdges.c_str(), textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+
+	std::string nodeEdgesStr = "";
+	for (int edge : nodeEdges)
+	{
+		if (!nodeEdgesStr.empty())
+		{
+			nodeEdgesStr += ',';
+		}
+		nodeEdgesStr += std::to_string(edge);
+	}
+	DrawText(nodeEdgesStr.c_str(), textBox.x + 5, textBox.y + 3.3, 32, MAROON);
 }
 
 Vector2 posDiff;
@@ -155,38 +187,48 @@ void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, 
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Add Node", button.x + 15, button.y + 7, 24, MAROON);
 
-	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && nodeID[0] != '\0')
+	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && addNodeID[0] != '\0')
 	{
-		int id = stoi(nodeID);
+		int id = stoi(addNodeID);
 		graph.AddNode(id, 150, 100);
-		nodeID[0] = '\0';
-		nodeIDIndex = 0;
+		addNodeID[0] = '\0';
+		addNodeIDIndex = 0;
 		for(auto & node : nodes)
 		{
-			if (isNodePresentInNodeEdges(node.GetId(), nodeEdges)) {
+			if (isNodePresentInNodeEdges(node.GetId())) {
 				std::cout << "Adding edge to node: " << node.GetId() << std::endl;
 				graph.AddEdge(id, node.GetId(), 1.0f);
 			}
 		}
-		nodeEdges = "";
+		nodeEdges.clear();
 	}
 }
 
-bool Renderer::isNodePresentInNodeEdges(int nodeId, const std::string& nodeEdges) {
-	std::istringstream iss(nodeEdges);
-	std::string token;
-	while (std::getline(iss, token, ',')) {
-		if (std::stoi(token) == nodeId) {
-			return true;
-		}
+void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) {
+	Rectangle button = { screenWidth / 4.0f - 55, screenHeight / 1.1f - 32, 180, 35 };
+	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
+	DrawText("Remove Node", button.x + 15, button.y + 7, 24, MAROON);
+
+	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && delNodeID[0] != '\0' && graph.HasNode(stoi(delNodeID)))
+	{
+		int id = stoi(delNodeID);
+		graph.RemoveNode(id);
+		auto it = std::remove_if(nodes.begin(), nodes.end(), [id](const Node& node) { return node.GetId() == id; });
+		nodes.erase(it, nodes.end());
+		delNodeID[0] = '\0';
+		delNodeIDIndex = 0;
 	}
-	return false;
+}
+
+bool Renderer::isNodePresentInNodeEdges(int nodeId) {
+	return std::find(nodeEdges.begin(), nodeEdges.end(), nodeId) != nodeEdges.end();
 }
 
 void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
 {
-	DrawText("Delete Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 18, 32, MAROON);
+	DrawText("Remove Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 30, 32, MAROON);
 	DrawText("Add New Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f + 33, 32, MAROON);
-	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK);
+	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK); // add node
+	DrawText("Node ID", screenWidth / 4.0f - 138, screenHeight / 1.1f + 6, 13, BLACK); // remove node
 	DrawText("Add Edge Connections", screenWidth / 4.0f - 21, screenHeight / 1.1f + 68, 13, BLACK);
 }

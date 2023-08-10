@@ -31,8 +31,10 @@ int main(void)
         renderer.DrawNodeEdges(screenWidth, screenHeight, graph.GetNodes(), graph);
         renderer.DraggableNode(graph.GetNodes());
         renderer.DrawNodeInput(screenWidth, screenHeight);
+        renderer.DrawNodeDeleteInput(screenWidth, screenHeight);
         renderer.DrawEdgeConnectionInput(screenWidth, screenHeight, graph.GetNodes());
         renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
+        renderer.DrawRemoveNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawOnScreenText(screenWidth, screenHeight);
         renderer.DrawNodes(graph.GetNodes());
         //graph.PrintGraph();
