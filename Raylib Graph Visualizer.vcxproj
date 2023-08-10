@@ -32,6 +32,7 @@
     <ClInclude Include="include\Algorithms.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\Node.h" />
+    <ClInclude Include="include\raygui.h" />
     <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\Util.h" />
@@ -124,7 +125,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>

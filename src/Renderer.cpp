@@ -10,6 +10,10 @@
 #include <sstream>
 #include <iostream>
 
+#define RAYGUI_IMPLEMENTATION
+#include "../include/raygui.h"
+
+
 
 using namespace std;
 
@@ -229,6 +233,8 @@ bool Renderer::isNodePresentInNodeEdges(int nodeId) {
 	return std::find(nodeEdges.begin(), nodeEdges.end(), nodeId) != nodeEdges.end();
 }
 
+
+bool test = true;
 void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
 {
 	DrawText("Remove Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 30, 32, MAROON);
@@ -236,4 +242,5 @@ void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight)
 	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK); // add node
 	DrawText("Node ID", screenWidth / 4.0f - 138, screenHeight / 1.1f + 6, 13, BLACK); // remove node
 	DrawText("Add Edge Connections", screenWidth / 4.0f - 21, screenHeight / 1.1f + 68, 13, BLACK);
+	GuiCheckBox(Rectangle({ 600, 380, 20, 20 }), "Draw CircleLines", &test);
 }
