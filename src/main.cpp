@@ -9,8 +9,8 @@
 
 int main(void)
 {
-    const int screenWidth = 1200;
-    const int screenHeight = 750;
+    const int screenWidth = 1600;
+    const int screenHeight = 1000;
     InitWindow(screenWidth, screenHeight, "Graph Visualizer");
 
     SetTargetFPS(60);

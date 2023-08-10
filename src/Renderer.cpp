@@ -47,8 +47,8 @@ void Renderer::DrawNodeEdges(const int screenWidth, const int screenHeight, std:
 
 void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 {
-	Rectangle textBox = { screenWidth / 4.0f - 30, screenHeight / 1.1f, 85, 35 };
-	DrawRectangleRec(textBox, LIGHTGRAY);
+	Rectangle textBox = { screenWidth / 4.0f - 140, screenHeight / 1.1f + 30, 85, 35 };
+	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
 
 	if (CheckCollisionPointRec(GetMousePosition(), textBox))
 	{
@@ -81,8 +81,8 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 
 void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::vector<Node>& nodes)
 {
-	Rectangle textBox = { screenWidth / 4.0f + 60, screenHeight / 1.1f, 175, 35 };
-	DrawRectangleRec(textBox, LIGHTGRAY);
+	Rectangle textBox = { screenWidth / 4.0f - 40, screenHeight / 1.1f + 30, 175, 35 };
+	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
 
 	for (const auto& node : nodes) 
 	{
@@ -151,7 +151,7 @@ void Renderer::DraggableNode(std::vector<Node>& nodes)
 }
 
 void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) {
-	Rectangle button = { screenWidth / 4.0f + 250, screenHeight / 1.1f, 140, 35 };
+	Rectangle button = { screenWidth / 4.0f + 150, screenHeight / 1.1f + 30, 140, 35 };
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Add Node", button.x + 15, button.y + 7, 24, MAROON);
 
@@ -185,7 +185,8 @@ bool Renderer::isNodePresentInNodeEdges(int nodeId, const std::string& nodeEdges
 
 void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
 {
-	DrawText("Add New Node: ", screenWidth / 4.0f - 275, screenHeight / 1.1f + 3, 32, MAROON);
-	DrawText("Node ID", screenWidth / 4.0f - 12, screenHeight / 1.1f + 38, 12, BLACK);
-	DrawText("Add Edge Connections", screenWidth / 4.0f + 80, screenHeight / 1.1f + 38, 12, BLACK);
+	DrawText("Delete Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 18, 32, MAROON);
+	DrawText("Add New Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f + 33, 32, MAROON);
+	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK);
+	DrawText("Add Edge Connections", screenWidth / 4.0f - 21, screenHeight / 1.1f + 68, 13, BLACK);
 }
