@@ -25,8 +25,13 @@ void Renderer::DrawNodes(std::vector<Node>& nodes)
 {
 	for (const auto& node : nodes) {
 		Vector2 pos = { node.GetX(), node.GetY() };
-		DrawTexture(blackNodeTexture, pos.x - blackNodeTexture.width / 2, pos.y - blackNodeTexture.height / 2, WHITE); // You may need to adjust the offset		Texture2D texture = LoadTextureFromImage(nodeImage);
-		DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, WHITE);
+		DrawTexture(blackNodeTexture, pos.x - blackNodeTexture.width / 2, pos.y - blackNodeTexture.height / 2, WHITE);
+		if (node.GetId() >= 10) { // change text position for single & multi digit
+			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 10, node.GetY() - 10, 20, WHITE); 
+		}
+		else {
+			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, WHITE);
+		}
 	}
 }
 
@@ -57,7 +62,7 @@ void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
 		while (key > 0)
 		{
-			if (key >= 32 && key <= 125 && (addNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
+			if (key >= 48 && key <= 57 && (addNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
 			{
 				addNodeID[addNodeIDIndex] = (char)key;
 				addNodeID[addNodeIDIndex + 1] = '\0';
@@ -91,7 +96,7 @@ void Renderer::DrawNodeDeleteInput(const int screenWidth, const int screenHeight
 		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
 		while (key > 0)
 		{
-			if (key >= 32 && key <= 125 && (delNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
+			if (key >= 48 && key <= 57 && (delNodeIDIndex < MAX_INPUT_CHARS_ADD_NODE))
 			{
 				delNodeID[delNodeIDIndex] = (char)key;
 				delNodeID[delNodeIDIndex + 1] = '\0';
