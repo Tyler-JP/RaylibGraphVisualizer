@@ -1,6 +1,7 @@
 #pragma once
 #include "Graph.h"
 #include "Node.h"
+#include "raylib.h"
 #include <vector>
 #include <string>
 
@@ -14,6 +15,7 @@ private:
 	char nodeID[MAX_INPUT_CHARS_ADD_NODE + 1] = "\0";
 	std::string nodeEdges = "";
 	int nodeIDIndex = 0;
+	Texture2D blackNodeTexture;
 
 public:
 	void DrawNodes(std::vector<Node>& nodes);
@@ -24,4 +26,6 @@ public:
 	void DrawOnScreenText(const int screenWidth, const int screenHeight);
 	void DraggableNode(std::vector<Node>& nodes);
 	bool isNodePresentInNodeEdges(int nodeId, const std::string& nodeEdges);
+	void LoadNodeTexture();
+	void UnloadNodeTexture();
 };

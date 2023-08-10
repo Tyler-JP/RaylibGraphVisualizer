@@ -2,6 +2,7 @@
 #include "../include/Graph.h"
 #include "../include/Node.h"
 #include "../include/raylib.h"
+#include "../include/ResourceLoader.h"
 #include <map>
 #include <vector>
 #include <utility>
@@ -12,13 +13,20 @@
 
 using namespace std;
 
+void Renderer::LoadNodeTexture() {
+	blackNodeTexture = ResourceLoader::LoadTextures("assets/images/blacknode.png");
+}
+
+void Renderer::UnloadNodeTexture() {
+	UnloadTexture(blackNodeTexture);
+}
+
 void Renderer::DrawNodes(std::vector<Node>& nodes)
 {
 	for (const auto& node : nodes) {
 		Vector2 pos = { node.GetX(), node.GetY() };
-		DrawCircleV(pos, 40.0f, BLUE); // TODO: Need to change this to ImageDrawCircle to check for better pixelation
-		DrawCircleLines(node.GetX(), node.GetY(), 40.0f, BLACK);
-		DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, BLACK);
+		DrawTexture(blackNodeTexture, pos.x - blackNodeTexture.width / 2, pos.y - blackNodeTexture.height / 2, WHITE); // You may need to adjust the offset		Texture2D texture = LoadTextureFromImage(nodeImage);
+		DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, WHITE);
 	}
 }
 
@@ -31,7 +39,7 @@ void Renderer::DrawNodeEdges(const int screenWidth, const int screenHeight, std:
 			Node* neighborNode = graph.GetNode(neighbor.first);
 			if (neighborNode) {
 				Vector2 edgePos = { neighborNode->GetX(), neighborNode->GetY() };
-				DrawLineEx(pos, edgePos, 3.0f, BLACK);
+				DrawLineEx(pos, edgePos, 2.0f, BLACK);
 			}
 		}
 	}
@@ -111,7 +119,7 @@ void Renderer::DraggableNode(std::vector<Node>& nodes)
 	{
 		for (auto& node : nodes) {
 			Vector2 pos = { node.GetX(), node.GetY() };
-				if (CheckCollisionPointCircle(GetMousePosition(), pos, 40.0f))
+				if (CheckCollisionPointCircle(GetMousePosition(), pos, 31.0f))
 				{
 					draggableNodeIdx = node.GetId();
 					posDiff.x = node.GetX() - GetMousePosition().x;

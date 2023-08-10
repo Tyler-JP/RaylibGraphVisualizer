@@ -22,6 +22,8 @@ int main(void)
     Node nodeTest2(17, 500, 250);
 	// graph.AddNode(4, 750, 500); // TODO: Need to fix AddNode implementation
     // Need to add user input to add nodes
+
+    renderer.LoadNodeTexture();
     while (!WindowShouldClose())
     {
 		BeginDrawing();
@@ -36,6 +38,7 @@ int main(void)
         //graph.PrintGraph();
 		EndDrawing();
     }
+    renderer.UnloadNodeTexture();
 
     CloseWindow();
 
