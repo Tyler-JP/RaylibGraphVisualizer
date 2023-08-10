@@ -94,7 +94,12 @@ void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::v
 			size_t pos = nodeEdges.find(nodeIDStr);
 			if (pos != string::npos)
 			{
-				nodeEdges.erase(pos, nodeIDStr.length()+1);
+				if (pos != 0) {
+					nodeEdges.erase(pos, nodeIDStr.length());
+				}
+				else {
+					nodeEdges.erase(pos, nodeIDStr.length() + 1); // erase comma node is first in str
+				}
 				if (pos > 0 && nodeEdges[pos - 1] == ',')
 				{
 					nodeEdges.erase(pos-1, 1);
