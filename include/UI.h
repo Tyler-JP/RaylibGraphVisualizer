@@ -11,6 +11,7 @@ public:
 	void UpdateCheckbox(float xPos, float yPos);
 	void DrawCheckbox(float xPos, float yPos, std::string label);
 	int framesCounter = 0;
+	float alpha = 0.0f;
 
 private:
 	int state = 0;
@@ -30,5 +31,8 @@ private:
 	Vector2 endPos3 = { rightLineS, rightLineE }; // top-left down end
 	Vector2 linePos4 = { botLineS, botLineE }; // top-left right start
 	Vector2 endPos4 = { botLineS, botLineE }; // top-left right end
+
+	bool checkmarkInactive = false;
+	bool checkmarkActive = false;
 
 };

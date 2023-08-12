@@ -39,7 +39,7 @@ int main(void)
         renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawRemoveNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawOnScreenText(screenWidth, screenHeight);
-        ui.DrawCheckbox(100, 100, "test");
+        ui.DrawCheckbox(100, 100, "BFS");
         renderer.DrawNodes(graph.GetNodes());
         //graph.PrintGraph();
 		EndDrawing();

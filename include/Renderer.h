@@ -18,9 +18,11 @@ private:
 	std::vector<int> nodeEdges;
 	int addNodeIDIndex = 0;
 	int delNodeIDIndex = 0;
-	Texture2D blackNodeTexture;
 
 public:
+	static Texture2D blackNodeTexture;
+	static Texture2D checkmarkInactiveTexture;
+	static Texture2D checkmarkActiveTexture;
 	void DrawNodes(std::vector<Node>& nodes);
 	void DrawNodeEdges(const int screenWidth, const int screenHeight, std::vector<Node>& nodes, Graph& graph);
 	void DrawNodeInput(const int screenWidth, const int screenHeight);

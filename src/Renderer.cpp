@@ -10,19 +10,23 @@
 #include <sstream>
 #include <iostream>
 
-#define RAYGUI_IMPLEMENTATION
-#include "../include/raygui.h"
-
+Texture2D Renderer::blackNodeTexture;
+Texture2D Renderer::checkmarkInactiveTexture;
+Texture2D Renderer::checkmarkActiveTexture;
 
 
 using namespace std;
 
 void Renderer::LoadNodeTexture() {
 	blackNodeTexture = ResourceLoader::LoadTextures("assets/images/blacknode.png");
+	checkmarkInactiveTexture = ResourceLoader::LoadTextures("assets/images/checkmark_inactive.png");
+	checkmarkActiveTexture = ResourceLoader::LoadTextures("assets/images/checkmark_active.png");
 }
 
 void Renderer::UnloadNodeTexture() {
 	UnloadTexture(blackNodeTexture);
+	UnloadTexture(checkmarkInactiveTexture);
+	UnloadTexture(checkmarkActiveTexture);
 }
 
 void Renderer::DrawNodes(std::vector<Node>& nodes)
