@@ -2,6 +2,7 @@
 #include "Graph.h"
 #include "Node.h"
 #include "raylib.h"
+#include "UI.h"
 #include <vector>
 #include <string>
 
@@ -28,6 +29,7 @@ public:
 	void DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes);
 	void DrawRemoveNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes);
 	void DrawOnScreenText(const int screenWidth, const int screenHeight);
+	void DrawUpdates(const int screenWidth, const int screenHeight);
 	void DraggableNode(std::vector<Node>& nodes);
 	bool isNodePresentInNodeEdges(int nodeId);
 	void LoadNodeTexture();

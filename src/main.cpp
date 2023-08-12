@@ -3,6 +3,7 @@
 #include "../include/Node.h"
 #include "../include/raylib.h"
 #include "../include/Renderer.h"
+#include "../include/UI.h"
 #include <map>
 #include <vector>
 #include <utility>
@@ -16,6 +17,7 @@ int main(void)
     SetTargetFPS(60);
 
     Renderer renderer;
+    UI ui;
     Graph graph(renderer);
 
     Node nodeTest(3, 750, 500);
@@ -26,6 +28,7 @@ int main(void)
     renderer.LoadNodeTexture();
     while (!WindowShouldClose())
     {
+        ui.UpdateCheckbox(100,100);
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
         renderer.DrawNodeEdges(screenWidth, screenHeight, graph.GetNodes(), graph);
@@ -36,6 +39,7 @@ int main(void)
         renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawRemoveNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawOnScreenText(screenWidth, screenHeight);
+        ui.DrawCheckbox(100, 100, "test");
         renderer.DrawNodes(graph.GetNodes());
         //graph.PrintGraph();
 		EndDrawing();

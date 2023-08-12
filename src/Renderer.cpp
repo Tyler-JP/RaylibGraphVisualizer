@@ -191,7 +191,8 @@ void Renderer::DraggableNode(std::vector<Node>& nodes)
 	}
 }
 
-void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) {
+void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) 
+{
 	Rectangle button = { screenWidth / 4.0f + 150, screenHeight / 1.1f + 30, 140, 35 };
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Add Node", button.x + 15, button.y + 7, 24, MAROON);
@@ -213,7 +214,8 @@ void Renderer::DrawAddNodeButton(const int screenWidth, const int screenHeight, 
 	}
 }
 
-void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) {
+void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes) 
+{
 	Rectangle button = { screenWidth / 4.0f - 55, screenHeight / 1.1f - 32, 180, 35 };
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Remove Node", button.x + 15, button.y + 7, 24, MAROON);
@@ -229,12 +231,11 @@ void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeigh
 	}
 }
 
-bool Renderer::isNodePresentInNodeEdges(int nodeId) {
+bool Renderer::isNodePresentInNodeEdges(int nodeId) 
+{
 	return std::find(nodeEdges.begin(), nodeEdges.end(), nodeId) != nodeEdges.end();
 }
 
-
-bool test = true;
 void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
 {
 	DrawText("Remove Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 30, 32, MAROON);
@@ -242,5 +243,4 @@ void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight)
 	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK); // add node
 	DrawText("Node ID", screenWidth / 4.0f - 138, screenHeight / 1.1f + 6, 13, BLACK); // remove node
 	DrawText("Add Edge Connections", screenWidth / 4.0f - 21, screenHeight / 1.1f + 68, 13, BLACK);
-	GuiCheckBox(Rectangle({ 600, 380, 20, 20 }), "Draw CircleLines", &test);
 }
