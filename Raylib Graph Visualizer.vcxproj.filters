@@ -30,7 +30,7 @@
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI.cpp">
+    <ClCompile Include="src\Checkbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Util.cpp">
@@ -53,7 +53,7 @@
     <ClInclude Include="include\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\UI.h">
+    <ClInclude Include="include\Checkbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Util.h">

@@ -3,7 +3,7 @@
 #include "../include/Node.h"
 #include "../include/raylib.h"
 #include "../include/Renderer.h"
-#include "../include/UI.h"
+#include "../include/Checkbox.h"
 #include <map>
 #include <vector>
 #include <utility>
@@ -17,7 +17,7 @@ int main(void)
     SetTargetFPS(60);
 
     Renderer renderer;
-    UI ui;
+    Checkbox BFSCheckbox(125, 75,"BFS");
     Graph graph(renderer);
 
     Node nodeTest(3, 750, 500);
@@ -28,7 +28,7 @@ int main(void)
     renderer.LoadNodeTexture();
     while (!WindowShouldClose())
     {
-        ui.UpdateCheckbox(100,100);
+        BFSCheckbox.UpdateCheckbox();
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
         renderer.DrawNodeEdges(screenWidth, screenHeight, graph.GetNodes(), graph);
@@ -39,7 +39,7 @@ int main(void)
         renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawRemoveNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawOnScreenText(screenWidth, screenHeight);
-        ui.DrawCheckbox(100, 100, "BFS");
+        BFSCheckbox.DrawCheckbox();
         renderer.DrawNodes(graph.GetNodes());
         //graph.PrintGraph();
 		EndDrawing();
