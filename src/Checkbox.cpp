@@ -62,7 +62,7 @@ void Checkbox::UpdateCheckbox()
 			endPos4 = { botLineS, botLineE };
 			if (leftLineE >= position.y + 27) animState = 1;
 		}
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), rec))
 		{
 			if (state == UNCHECKED || state == HOVER)
 			{
