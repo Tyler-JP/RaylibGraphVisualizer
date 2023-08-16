@@ -4,12 +4,15 @@
 #include "../include/raylib.h"
 #include "../include/Renderer.h"
 #include "../include/Checkbox.h"
+#include "../include/Conditionals.h"
 #include <map>
 #include <vector>
 #include <utility>
+#include <iostream>
 
 int main(void)
 {
+    Conditionals activeState = NONE;
     const int screenWidth = 1600;
     const int screenHeight = 1000;
     InitWindow(screenWidth, screenHeight, "Graph Visualizer");
@@ -38,10 +41,19 @@ int main(void)
         renderer.DrawEdgeConnectionInput(screenWidth, screenHeight, graph.GetNodes());
         renderer.DrawAddNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
         renderer.DrawRemoveNodeButton(screenWidth, screenHeight, graph, graph.GetNodes());
-        renderer.DrawOnScreenText(screenWidth, screenHeight);
+        renderer.DrawOnScreenText(screenWidth, screenHeight, activeState);
         BFSCheckbox.DrawCheckbox();
         renderer.DrawNodes(graph.GetNodes());
         //graph.PrintGraph();
+
+        if (BFSCheckbox.IsActive())
+        {
+            activeState = BFS;
+            renderer.DrawBFSStartNodeInput(screenWidth, screenHeight, graph.GetNodes());
+        }
+        else {
+            activeState = NONE;
+        }
 		EndDrawing();
     }
     renderer.UnloadNodeTexture();

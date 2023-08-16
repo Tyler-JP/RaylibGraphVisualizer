@@ -29,6 +29,7 @@
     <ClCompile Include="src\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Conditionals.h" />
     <ClInclude Include="include\Algorithms.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\Node.h" />

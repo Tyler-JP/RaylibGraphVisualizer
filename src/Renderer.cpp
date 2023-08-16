@@ -161,6 +161,40 @@ void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::v
 	DrawText(nodeEdgesStr.c_str(), textBox.x + 5, textBox.y + 3.3, 32, MAROON);
 }
 
+void Renderer::DrawBFSStartNodeInput(int screenWidth, int screenHeight, std::vector<Node>& nodes)
+{
+	Rectangle textBox = { screenWidth / 4.0f - 137, screenHeight / 1.1f - 95, 175, 35 };
+	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
+	if (CheckCollisionPointRec(GetMousePosition(), textBox))
+	{
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		int key = GetKeyPressed();
+		DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
+		while (key > 0)
+		{
+			if (key >= 48 && key <= 57 && (bfsStartNodeIndex < MAX_INPUT_CHARS_ADD_NODE))
+			{
+				bfsStartNode[bfsStartNodeIndex] = (char)key;
+				bfsStartNode[bfsStartNodeIndex + 1] = '\0';
+				bfsStartNodeIndex++;
+			}
+			key = GetKeyPressed();
+			if (IsKeyPressed(KEY_BACKSPACE)) {
+				if (bfsStartNodeIndex > 0) {
+					bfsStartNodeIndex--;
+					bfsStartNode[bfsStartNodeIndex] = '\0';
+				}
+			}
+		}
+	}
+	else
+	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	}
+	
+	DrawText(bfsStartNode, textBox.x + 5, textBox.y + 3.3, 32, MAROON);
+}
+
 Vector2 posDiff;
 int draggableNodeIdx = -1;
 void Renderer::DraggableNode(std::vector<Node>& nodes)
@@ -240,11 +274,14 @@ bool Renderer::isNodePresentInNodeEdges(int nodeId)
 	return std::find(nodeEdges.begin(), nodeEdges.end(), nodeId) != nodeEdges.end();
 }
 
-void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight) 
+void Renderer::DrawOnScreenText(const int screenWidth, const int screenHeight, Conditionals activeState) 
 {
 	DrawText("Remove Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 30, 32, MAROON);
 	DrawText("Add New Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f + 33, 32, MAROON);
 	DrawText("Node ID", screenWidth / 4.0f - 120, screenHeight / 1.1f + 68, 13, BLACK); // add node
 	DrawText("Node ID", screenWidth / 4.0f - 138, screenHeight / 1.1f + 6, 13, BLACK); // remove node
 	DrawText("Add Edge Connections", screenWidth / 4.0f - 21, screenHeight / 1.1f + 68, 13, BLACK);
+	if (activeState == BFS) {
+		DrawText("Starting Node: ", screenWidth / 4.0f - 375, screenHeight / 1.1f - 93, 32, MAROON);
+	}
 }
