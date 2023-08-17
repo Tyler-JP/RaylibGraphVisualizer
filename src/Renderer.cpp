@@ -3,6 +3,7 @@
 #include "../include/Node.h"
 #include "../include/raylib.h"
 #include "../include/ResourceLoader.h"
+#include "../include/Algorithms.h"
 #include <map>
 #include <vector>
 #include <utility>
@@ -11,6 +12,7 @@
 #include <iostream>
 
 Texture2D Renderer::blackNodeTexture;
+Texture2D Renderer::maroonNodeTexture;
 Texture2D Renderer::checkmarkInactiveTexture;
 Texture2D Renderer::checkmarkActiveTexture;
 
@@ -18,7 +20,8 @@ Texture2D Renderer::checkmarkActiveTexture;
 using namespace std;
 
 void Renderer::LoadNodeTexture() {
-	blackNodeTexture = ResourceLoader::LoadTextures("assets/images/blacknode.png");
+	blackNodeTexture = ResourceLoader::LoadTextures("assets/images/black_node.png");
+	maroonNodeTexture = ResourceLoader::LoadTextures("assets/images/maroon_node.png");
 	checkmarkInactiveTexture = ResourceLoader::LoadTextures("assets/images/checkmark_inactive.png");
 	checkmarkActiveTexture = ResourceLoader::LoadTextures("assets/images/checkmark_active.png");
 }
@@ -32,8 +35,15 @@ void Renderer::UnloadNodeTexture() {
 void Renderer::DrawNodes(std::vector<Node>& nodes)
 {
 	for (const auto& node : nodes) {
+		Texture2D nodeTexture;
+		if (node.GetColor() == 0) {
+			nodeTexture = blackNodeTexture;
+		}
+		else if (node.GetColor() == 1) {
+			nodeTexture = maroonNodeTexture;
+		}
 		Vector2 pos = { node.GetX(), node.GetY() };
-		DrawTexture(blackNodeTexture, pos.x - blackNodeTexture.width / 2, pos.y - blackNodeTexture.height / 2, WHITE);
+		DrawTexture(nodeTexture, pos.x - nodeTexture.width / 2, pos.y - nodeTexture.height / 2, WHITE);
 		if (node.GetId() >= 10) { // change text position for single & multi digit
 			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 10, node.GetY() - 10, 20, WHITE); 
 		}
@@ -271,15 +281,52 @@ void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeigh
 
 void Renderer::DrawBFSStartButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes)
 {
+	Algorithms algorithm;
 	Rectangle button = { screenWidth / 4.0f - 40, screenHeight / 1.1f - 95, 93, 35 };
 	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
 	DrawText("Start", button.x + 15, button.y + 7, 24, MAROON);
 
 	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && bfsStartNode[0] != '\0' && graph.HasNode(stoi(bfsStartNode)))
 	{
-		
+		int startNode = stoi(bfsStartNode);
+		bfsTraversalOrder = algorithm.BFS(graph, startNode);
+		std::cout << "BFS Traversal Order: ";
+		for (auto& node : bfsTraversalOrder)
+		{
+			std::cout << node << " ";
+		}
+		currentBFSIndex = 0;
+		lastUpdateTime = GetTime();
 	}
 }
+
+void Renderer::UpdateBFSAnimation(std::vector<Node>& nodes)
+{
+	if (currentBFSIndex >= 0 && currentBFSIndex < bfsTraversalOrder.size())
+	{
+		if (GetTime() - lastUpdateTime >= animationInterval)
+		{
+			int nodeID = bfsTraversalOrder[currentBFSIndex];
+			for (auto& node : nodes)
+			{
+				if (node.GetId() == nodeID)
+				{
+					node.SetColor(1);
+					break;
+				}
+			}
+
+			currentBFSIndex++;
+			lastUpdateTime += animationInterval;
+
+			if (currentBFSIndex >= bfsTraversalOrder.size())
+			{
+				currentBFSIndex = -1;  // End the animation
+			}
+		}
+	}
+}
+
 
 bool Renderer::isNodePresentInNodeEdges(int nodeId) 
 {

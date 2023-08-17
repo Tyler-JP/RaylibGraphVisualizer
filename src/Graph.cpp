@@ -28,9 +28,12 @@ void Graph::RemoveNode(int node)
 		return;
 	}
 
-	if (HasNode(node)) {
-		adjacencyList.erase(node);
+	for (auto& item : adjacencyList) {
+		item.second.erase(remove_if(item.second.begin(), item.second.end(), [node](pair<int, double> edge) { return edge.first == node; }), item.second.end());
 	}
+
+	adjacencyList.erase(node);
+	
 }
 
 void Graph::AddEdge(int node1, int node2, double weight)
@@ -41,6 +44,7 @@ void Graph::AddEdge(int node1, int node2, double weight)
 	
 	if (!HasEdge(node1, node2)) {
 		adjacencyList[node1].push_back(make_pair(node2, weight));
+		adjacencyList[node2].push_back(make_pair(node1, weight));
 	}
 }
 

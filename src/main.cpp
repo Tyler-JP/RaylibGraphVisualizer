@@ -32,6 +32,7 @@ int main(void)
     while (!WindowShouldClose())
     {
         BFSCheckbox.UpdateCheckbox();
+        renderer.UpdateBFSAnimation(graph.GetNodes());
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
         renderer.DrawNodeEdges(screenWidth, screenHeight, graph.GetNodes(), graph);

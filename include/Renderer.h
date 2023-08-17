@@ -24,6 +24,7 @@ private:
 
 public:
 	static Texture2D blackNodeTexture;
+	static Texture2D maroonNodeTexture;
 	static Texture2D checkmarkInactiveTexture;
 	static Texture2D checkmarkActiveTexture;
 	void DrawNodes(std::vector<Node>& nodes);
@@ -38,7 +39,14 @@ public:
 	void DrawOnScreenText(const int screenWidth, const int screenHeight, Conditionals activeState);
 	void DrawUpdates(const int screenWidth, const int screenHeight);
 	void DraggableNode(std::vector<Node>& nodes);
+	void UpdateBFSAnimation(std::vector<Node>& nodes);
 	bool isNodePresentInNodeEdges(int nodeId);
 	void LoadNodeTexture();
 	void UnloadNodeTexture();
+
+private:
+	std::vector<int> bfsTraversalOrder;
+	int currentBFSIndex = -1;
+	double lastUpdateTime = 0;
+	const double animationInterval = 1;
 };
