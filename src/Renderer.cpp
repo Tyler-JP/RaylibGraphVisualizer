@@ -4,6 +4,7 @@
 #include "../include/raylib.h"
 #include "../include/ResourceLoader.h"
 #include "../include/Algorithms.h"
+#include "../include/Conditionals.h"
 #include <map>
 #include <vector>
 #include <utility>
@@ -36,16 +37,14 @@ void Renderer::DrawNodes(std::vector<Node>& nodes)
 {
 	for (const auto& node : nodes) {
 		Texture2D nodeTexture;
-		if (node.GetColor() == 0) {
-			nodeTexture = blackNodeTexture;
-		}
-		else if (node.GetColor() == 1) {
+		nodeTexture = blackNodeTexture;
+		if (node.GetColor() == 1 && activeState == BFS) {
 			nodeTexture = maroonNodeTexture;
 		}
 		Vector2 pos = { node.GetX(), node.GetY() };
 		DrawTexture(nodeTexture, pos.x - nodeTexture.width / 2, pos.y - nodeTexture.height / 2, WHITE);
 		if (node.GetId() >= 10) { // change text position for single & multi digit
-			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 10, node.GetY() - 10, 20, WHITE); 
+			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 10, node.GetY() - 10, 20, WHITE);
 		}
 		else {
 			DrawText(TextFormat("%d", node.GetId()), node.GetX() - 5, node.GetY() - 10, 20, WHITE);
@@ -62,11 +61,17 @@ void Renderer::DrawNodeEdges(const int screenWidth, const int screenHeight, std:
 			Node* neighborNode = graph.GetNode(neighbor.first);
 			if (neighborNode) {
 				Vector2 edgePos = { neighborNode->GetX(), neighborNode->GetY() };
-				DrawLineEx(pos, edgePos, 2.0f, BLACK);
+				if (node.GetColor() == 1 && neighborNode->GetColor() == 1 && activeState != NONE) {
+					DrawLineEx(pos, edgePos, 2.0f, MAROON);
+				}
+				else {
+					DrawLineEx(pos, edgePos, 2.0f, BLACK);
+				}
 			}
 		}
 	}
-}	
+}
+
 
 void Renderer::DrawNodeInput(const int screenWidth, const int screenHeight)
 {

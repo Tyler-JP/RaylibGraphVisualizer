@@ -20,13 +20,10 @@ int main(void)
     SetTargetFPS(60);
 
     Renderer renderer;
-    Checkbox BFSCheckbox(125, 75,"BFS");
+    Checkbox BFSCheckbox(100, 700,"BFS");
     Graph graph(renderer);
 
-    Node nodeTest(3, 750, 500);
-    Node nodeTest2(17, 500, 250);
 	// graph.AddNode(4, 750, 500); // TODO: Need to fix AddNode implementation
-    // Need to add user input to add nodes
 
     renderer.LoadNodeTexture();
     while (!WindowShouldClose())
@@ -56,6 +53,7 @@ int main(void)
         else {
             activeState = NONE;
         }
+        renderer.SetActiveState(activeState);
 		EndDrawing();
     }
     renderer.UnloadNodeTexture();

@@ -44,9 +44,12 @@ public:
 	void LoadNodeTexture();
 	void UnloadNodeTexture();
 
+	void SetActiveState(Conditionals state) { activeState = state; }
+
 private:
 	std::vector<int> bfsTraversalOrder;
 	int currentBFSIndex = -1;
 	double lastUpdateTime = 0;
 	const double animationInterval = 1;
+	Conditionals activeState;
 };
