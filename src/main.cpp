@@ -50,6 +50,7 @@ int main(void)
         {
             activeState = BFS;
             renderer.DrawBFSStartNodeInput(screenWidth, screenHeight, graph.GetNodes());
+            renderer.DrawBFSStartButton(screenWidth, screenHeight, graph, graph.GetNodes());
         }
         else {
             activeState = NONE;

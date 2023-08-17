@@ -163,7 +163,7 @@ void Renderer::DrawEdgeConnectionInput(int screenWidth, int screenHeight, std::v
 
 void Renderer::DrawBFSStartNodeInput(int screenWidth, int screenHeight, std::vector<Node>& nodes)
 {
-	Rectangle textBox = { screenWidth / 4.0f - 137, screenHeight / 1.1f - 95, 175, 35 };
+	Rectangle textBox = { screenWidth / 4.0f - 137, screenHeight / 1.1f - 95, 85, 35 };
 	DrawRectangleRounded(textBox, 0.2, 4, LIGHTGRAY);
 	if (CheckCollisionPointRec(GetMousePosition(), textBox))
 	{
@@ -266,6 +266,18 @@ void Renderer::DrawRemoveNodeButton(const int screenWidth, const int screenHeigh
 		nodes.erase(it, nodes.end());
 		delNodeID[0] = '\0';
 		delNodeIDIndex = 0;
+	}
+}
+
+void Renderer::DrawBFSStartButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes)
+{
+	Rectangle button = { screenWidth / 4.0f - 40, screenHeight / 1.1f - 95, 93, 35 };
+	DrawRectangleRounded(button, 0.5, 0, LIGHTGRAY);
+	DrawText("Start", button.x + 15, button.y + 7, 24, MAROON);
+
+	if (CheckCollisionPointRec(GetMousePosition(), button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && bfsStartNode[0] != '\0' && graph.HasNode(stoi(bfsStartNode)))
+	{
+		
 	}
 }
 

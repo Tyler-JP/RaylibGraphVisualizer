@@ -34,6 +34,7 @@ public:
 	void DrawBFSStartNodeInput(const int screenWidth, const int screenHeight, std::vector<Node>& nodes);
 	void DrawAddNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes);
 	void DrawRemoveNodeButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes);
+	void DrawBFSStartButton(const int screenWidth, const int screenHeight, Graph& graph, std::vector<Node>& nodes);
 	void DrawOnScreenText(const int screenWidth, const int screenHeight, Conditionals activeState);
 	void DrawUpdates(const int screenWidth, const int screenHeight);
 	void DraggableNode(std::vector<Node>& nodes);
