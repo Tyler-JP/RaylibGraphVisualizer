@@ -59,6 +59,12 @@ void Graph::RemoveEdge(int node1, int node2)
 	}
 }
 
+void Graph::ClearGraph()
+{
+	adjacencyList.clear();
+	nodes.clear();
+}
+
 bool Graph::HasNode(int node)
 {
 	return adjacencyList.find(node) != adjacencyList.end();
@@ -103,6 +109,60 @@ const vector<pair<int, double>>& Graph::GetNeighbors(int node)
 	}
 
 	return adjacencyList[node];
+}
+
+void Graph::LoadPreset1() {
+	AddNode(1, 300, 400);
+	AddNode(2, 500, 600);
+	AddNode(3, 500, 200);
+	AddNode(4, 800, 200);
+	AddNode(5, 800, 600);
+	AddNode(6, 1000, 400);
+	AddEdge(1, 2);
+	AddEdge(1, 3);
+	AddEdge(2, 5);
+	AddEdge(3, 4);
+	AddEdge(4, 6);
+	AddEdge(5, 6);
+
+}
+
+void Graph::LoadPreset2() {
+	AddNode(1, 200, 200);
+	AddNode(2, 300, 200);
+	AddNode(3, 200, 400);
+	AddNode(4, 200, 500);
+	AddNode(5, 200, 600);
+	AddNode(6, 200, 800);
+	AddNode(7, 500, 500);
+	AddNode(8, 400, 400);
+	AddEdge(1, 2);
+	AddEdge(1, 3);
+	AddEdge(1, 4);
+	AddEdge(2, 5);
+	AddEdge(3, 4);
+	AddEdge(3, 8);
+	AddEdge(4, 5);
+	AddEdge(4, 6);
+}
+
+void Graph::LoadPreset3() {
+	AddNode(1, 200, 200);
+	AddNode(2, 300, 200);
+	AddNode(3, 200, 400);
+	AddNode(4, 200, 500);
+	AddNode(5, 200, 600);
+	AddNode(6, 200, 800);
+	AddNode(7, 500, 500);
+	AddNode(8, 400, 400);
+	AddEdge(1, 2);
+	AddEdge(1, 3);
+	AddEdge(1, 4);
+	AddEdge(2, 5);
+	AddEdge(3, 4);
+	AddEdge(3, 8);
+	AddEdge(4, 5);
+	AddEdge(4, 6);
 }
 
 void Graph::PrintGraph() {

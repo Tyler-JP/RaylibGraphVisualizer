@@ -16,6 +16,7 @@ public:
 	void RemoveNode(int node);
 	void AddEdge(int node1, int node2, double weight = 1.0);
 	void RemoveEdge(int node1, int node2);
+	void ClearGraph();
 
 	bool HasNode(int node);
 	bool HasEdge(int node1, int node2);
@@ -27,6 +28,9 @@ public:
 		return it != nodes.end() ? &(*it) : nullptr;
 	}
 	const std::map<int, std::vector<std::pair<int, double>>>& GetEdges() { return adjacencyList; }
+	void LoadPreset1();
+	void LoadPreset2();
+	void LoadPreset3();
 	void PrintGraph();
 	
 
