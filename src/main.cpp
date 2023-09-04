@@ -46,6 +46,9 @@ int main(void)
         else {
 			graphCleared = false;
 		}
+        if (Preset1Checkbox.IsActive()) graph.LoadPreset1();
+        if (Preset2Checkbox.IsActive()) graph.LoadPreset2();
+        if (Preset3Checkbox.IsActive()) graph.LoadPreset3();
         renderer.UpdateBFSAnimation(graph.GetNodes());
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -73,10 +76,6 @@ int main(void)
         else {
             activeState = NONE;
         }
-        if (Preset1Checkbox.IsActive())
-        {
-			graph.LoadPreset1();
-		}
         renderer.SetActiveState(activeState);
 		EndDrawing();
     }

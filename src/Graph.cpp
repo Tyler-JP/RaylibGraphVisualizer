@@ -128,41 +128,54 @@ void Graph::LoadPreset1() {
 }
 
 void Graph::LoadPreset2() {
-	AddNode(1, 200, 200);
-	AddNode(2, 300, 200);
-	AddNode(3, 200, 400);
-	AddNode(4, 200, 500);
-	AddNode(5, 200, 600);
-	AddNode(6, 200, 800);
-	AddNode(7, 500, 500);
-	AddNode(8, 400, 400);
+	AddNode(1, 300, 400);
+	AddNode(2, 600, 200);
+	AddNode(3, 600, 100);
+	AddNode(4, 900, 400);
+	AddNode(5, 1100, 600);
+	AddNode(6, 600, 400);
+	AddNode(7, 700, 700);
 	AddEdge(1, 2);
 	AddEdge(1, 3);
-	AddEdge(1, 4);
-	AddEdge(2, 5);
+	AddEdge(2, 4);
 	AddEdge(3, 4);
-	AddEdge(3, 8);
 	AddEdge(4, 5);
 	AddEdge(4, 6);
+	AddEdge(7, 6);
+	AddEdge(7, 5);
+	AddEdge(7, 4);
 }
 
 void Graph::LoadPreset3() {
-	AddNode(1, 200, 200);
-	AddNode(2, 300, 200);
-	AddNode(3, 200, 400);
-	AddNode(4, 200, 500);
-	AddNode(5, 200, 600);
-	AddNode(6, 200, 800);
-	AddNode(7, 500, 500);
-	AddNode(8, 400, 400);
+	AddNode(1, 400, 200);
+	AddNode(2, 600, 200);
+	AddNode(3, 800, 200);
+	AddNode(4, 1000, 200);
+	AddNode(5, 400, 400);
+	AddNode(6, 600, 400);
+	AddNode(7, 800, 400);
+	AddNode(8, 1000, 400);
+	AddNode(9, 400, 600);
+	AddNode(10, 600, 600);
+	AddNode(11, 800, 600);
+	AddNode(12, 1000, 600);
 	AddEdge(1, 2);
-	AddEdge(1, 3);
-	AddEdge(1, 4);
-	AddEdge(2, 5);
+	AddEdge(2, 3);
 	AddEdge(3, 4);
-	AddEdge(3, 8);
-	AddEdge(4, 5);
-	AddEdge(4, 6);
+	AddEdge(1, 5);
+	AddEdge(2, 6);
+	AddEdge(3, 7);
+	AddEdge(4, 8);
+	AddEdge(5, 6);
+	AddEdge(6, 7);
+	AddEdge(7, 8);
+	AddEdge(5, 9);
+	AddEdge(6, 10);
+	AddEdge(7, 11);
+	AddEdge(8, 12);
+	AddEdge(9, 10);
+	AddEdge(10, 11);
+	AddEdge(11, 12);
 }
 
 void Graph::PrintGraph() {
