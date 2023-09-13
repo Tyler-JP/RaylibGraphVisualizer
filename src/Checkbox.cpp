@@ -18,6 +18,10 @@ bool Checkbox::IsActive() const {
 	return state == CHECKED;
 }
 
+void Checkbox::SetState(CheckboxState state) {
+	this->state = state;
+}
+
 void Checkbox::DrawCheckbox()
 {
 	Color active = BLACK;
@@ -35,8 +39,12 @@ void Checkbox::DrawCheckbox()
 
 }
 
-void Checkbox::UpdateCheckbox()
+void Checkbox::UpdateCheckbox(bool canChangeState)
 {
+	if (!canChangeState && state == CHECKED)
+	{
+		return;
+	}
 	Rectangle rec = { position.x, position.y, CHECKBOX_SIZE.x, CHECKBOX_SIZE.y };
 	if (CheckCollisionPointRec(GetMousePosition(), rec) || state == CHECKED) {
 		if (state == UNCHECKED) {
@@ -62,7 +70,7 @@ void Checkbox::UpdateCheckbox()
 			endPos4 = { botLineS, botLineE };
 			if (leftLineE >= position.y + 27) animState = 1;
 		}
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), rec))
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), rec) && canChangeState)
 		{
 			if (state == UNCHECKED || state == HOVER)
 			{

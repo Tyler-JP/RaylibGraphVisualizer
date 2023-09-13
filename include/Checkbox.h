@@ -5,17 +5,18 @@
 #include <vector>
 #include <string>
 
-enum CheckboxState {
-	UNCHECKED,
-	HOVER,
-	CHECKED
-};
-
 class Checkbox {
 public:
+	enum CheckboxState {
+		UNCHECKED,
+		HOVER,
+		CHECKED
+	};
+
 	Checkbox(float x, float y, const std::string& label);
-	void UpdateCheckbox();
+	void UpdateCheckbox(bool canChangeState);
 	void DrawCheckbox();
+	void SetState(CheckboxState state);
 	bool IsActive() const;
 	int framesCounter = 0;
 
